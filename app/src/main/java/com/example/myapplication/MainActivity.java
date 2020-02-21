@@ -1,16 +1,13 @@
 package com.example.myapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
-import com.example.myapplication.databinding.ActivityMainBinding;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -23,42 +20,41 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    private ActivityMainBinding binding;
     List<String> xAxisValues = new ArrayList<>(Arrays.asList("12AM", "1AM", "2AM", "3AM", "4AM", "5AM", "6AM", "7AM", "8AM", "9AM", "10AM", "11AM", "12PM", "1PM", "2PM", "3PM", "4PM", "5PM", "6PM", "7PM", "8PM", "9PM", "10PM", "11PM", "12AM"));
+    private BarChart chart;
 //    List<String> xAxisValues = new ArrayList<>(Arrays.asList("12AM",  "6AM", "12PM",  "6PM", "12AM"));
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
-        binding.chart.setDrawBarShadow(false);
-        binding.chart.setDrawValueAboveBar(true);
+        setContentView(R.layout.activity_main);
+        chart = findViewById(R.id.chart);
+        chart.setDrawBarShadow(false);
+        chart.setDrawValueAboveBar(true);
 
-        binding.chart.getDescription().setEnabled(false);
+        chart.getDescription().setEnabled(false);
 
         // if more than 60 entries are displayed in the chart, no values will be
         // drawn
-        binding.chart.setMaxVisibleValueCount(5);
+        chart.setMaxVisibleValueCount(5);
 
         // scaling can now only be done on x- and y-axis separately
-        binding.chart.setPinchZoom(true);
+        chart.setPinchZoom(true);
 
-        binding.chart.setDrawGridBackground(false);
+        chart.setDrawGridBackground(false);
         // chart.setDrawYLabels(false);
 
-        ValueFormatter xAxisFormatter = new DayAxisValueFormatter(binding.chart);
+        ValueFormatter xAxisFormatter = new DayAxisValueFormatter(chart);
 
-        XAxis xAxis = binding.chart.getXAxis();
+        XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         xAxis.setGranularity(0f); // only intervals of 1 day
         xAxis.setLabelCount(3);
 //        xAxis.setValueFormatter(xAxisFormatter);
         xAxis.setValueFormatter(new com.github.mikephil.charting.formatter.IndexAxisValueFormatter(xAxisValues));
-        Legend l = binding.chart.getLegend();
+        Legend l = chart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
         l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
@@ -97,12 +93,12 @@ public class MainActivity extends AppCompatActivity {
 
         BarDataSet set1;
 
-        if (binding.chart.getData() != null &&
-                binding.chart.getData().getDataSetCount() > 0) {
-            set1 = (BarDataSet) binding.chart.getData().getDataSetByIndex(0);
+        if (chart.getData() != null &&
+                chart.getData().getDataSetCount() > 0) {
+            set1 = (BarDataSet) chart.getData().getDataSetByIndex(0);
             set1.setValues(values);
-            binding.chart.getData().notifyDataChanged();
-            binding.chart.notifyDataSetChanged();
+            chart.getData().notifyDataChanged();
+            chart.notifyDataSetChanged();
 
         } else {
             set1 = new BarDataSet(values, "The year 2017");
@@ -115,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
             data.setValueTextSize(10f);
             data.setBarWidth(0.9f);
 
-            binding.chart.setData(data);
+            chart.setData(data);
         }
     }
 
