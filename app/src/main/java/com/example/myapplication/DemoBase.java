@@ -63,7 +63,7 @@ public abstract class DemoBase extends AppCompatActivity implements ActivityComp
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == PERMISSION_STORAGE) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                saveToGallery();
+//                saveToGallery();
             } else {
                 Toast.makeText(getApplicationContext(), "Saving FAILED!", Toast.LENGTH_SHORT)
                         .show();
@@ -96,5 +96,5 @@ public abstract class DemoBase extends AppCompatActivity implements ActivityComp
                     .show();
     }
 
-    protected abstract void saveToGallery();
+//    protected abstract void saveToGallery();
 }
