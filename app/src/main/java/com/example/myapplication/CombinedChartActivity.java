@@ -119,6 +119,5 @@ public class CombinedChartActivity extends DemoBase {
     }
 
 
-    @Override
     public void saveToGallery() { /* Intentionally left empty */ }
 }
